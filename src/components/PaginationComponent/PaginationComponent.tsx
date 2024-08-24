@@ -42,7 +42,7 @@ const PaginationComponent: FC<IProps> = () => {
             )}
         </>
     );
-    ;
+    
 };
 
 export {PaginationComponent};
