@@ -19,13 +19,26 @@ const PokemonsComponent: FC<IProps> = () => {
     const location = useLocation()
     const dispatch = useAppDispatch();
     const {list} = useAppSelector(state => state.pokemon)
+    const {type} = useAppSelector(state => state.typePokemon)
+
+
+
 
     // Логіка для визначення списку покемонів
     let pokemonList: IPokemonResultList[] | undefined;
+    if (location.pathname === '/search') {
+        pokemonList = type.pokemon.map(item => item.pokemon)
+    }
 
     if (location.pathname === '/favorite') {
         pokemonList = getFromLocalStorage(); // Отримуємо список покемонів з localStorage
-    } else {
+    // } else if (location.pathname === '/search') {
+    //     pokemonList = props;
+        // pokemonList = type.pokemon.map(item => item.pokemon);
+
+    }
+
+    else {
         pokemonList = list?.results; // Використовуємо список з Redux store
     }
 

@@ -2,6 +2,11 @@ import {FC, PropsWithChildren, useEffect} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import styles from "../PokemonsComponent/PokemonsComponent.module.css";
+import {typePokemonActions} from "../../redux/slice/typePokemonSlice";
+import {pokemonsAbylytyUrl, pokemonsTypeUrl} from "../../constants/urls";
+import {abilitiPokemonActions} from "../../redux/slice/abilitiPokemonSlice";
+import {PokemonsComponent} from "../PokemonsComponent/PokemonsComponent";
+import {IPokemonResultList} from "../../interfaces/pokemonListInterface";
 
 
 interface IProps extends PropsWithChildren {
@@ -9,35 +14,41 @@ interface IProps extends PropsWithChildren {
 }
 
 const SearchComponent: FC<IProps> = () => {
-    const [query] = useSearchParams()
-    const navigate = useNavigate()
+    const [query] = useSearchParams();
+    const navigate = useNavigate();
 
     const dispatch = useAppDispatch();
-    const {items} = useAppSelector(state => state.pokemon)
+    const { type } = useAppSelector(state => state.typePokemon);
+    const { ability } = useAppSelector(state => state.abilitiPokemon);
 
-    const searchWord = query.get('word')
-    let searchByName = false
-
-
-    if (query.get('type') === 'type') {
-
-
-    } else if (query.get('type') === 'ability') {
-        // console.log(query.get('type'))
-    } else {
-        console.log(query.get('type'))
-        searchByName = !searchByName
-    }
+    const searchWord = query.get('word');
+    const searchType = query.get('type');
 
     useEffect(() => {
-        navigate(`/pokemon/${searchWord}`)
-    }, [searchWord, navigate, searchByName]);
+        if (searchType === 'name' && searchWord) {
+            navigate(`/pokemon/${searchWord}`);
+        }
+    }, [searchType, searchWord, navigate]);
+
+    useEffect(() => {
+        if (searchType === 'type' && searchWord) {
+            dispatch(typePokemonActions.getType({ url: `${pokemonsTypeUrl}${searchWord}` }));
+        }
+    }, [searchType, searchWord, dispatch]);
+
+    useEffect(() => {
+        if (searchType === 'ability' && searchWord) {
+            dispatch(abilitiPokemonActions.getAbility({ url: `${pokemonsAbylytyUrl}${searchWord}` }));
+        }
+    }, [searchType, searchWord, dispatch]);
 
     return (
         <div className={styles.wrap}>
-            search
+            {/*{searchType === 'type' || <PokemonsComponent />}*/}
+            {JSON.stringify(ability)}
+            {JSON.stringify(type)}
         </div>
     );
 };
 
-export {SearchComponent};
+export { SearchComponent };

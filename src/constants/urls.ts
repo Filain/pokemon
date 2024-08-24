@@ -6,4 +6,4 @@ const pokemonsAbylytyUrl = 'https://pokeapi.co/api/v2/ability/';
 
 
 
-export {pokemonsListUrl, pokemonsItemUrl}
+export {pokemonsListUrl, pokemonsItemUrl, pokemonsTypeUrl, pokemonsAbylytyUrl}
