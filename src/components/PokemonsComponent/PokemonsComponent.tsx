@@ -1,4 +1,4 @@
-import {FC, PropsWithChildren, useEffect, useState} from "react";
+import {FC, PropsWithChildren, useEffect, useMemo, useState} from "react";
 import {PaginationComponent} from "../PaginationComponent/PaginationComponent";
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {PokemonComponent} from "./PokemonComponent/PokemonComponent";
@@ -17,22 +17,22 @@ interface IProps extends PropsWithChildren {
 
 const PokemonsComponent: FC<IProps> = () => {
     const location = useLocation();
-    const [query, setQuery] = useSearchParams()
+    const [query] = useSearchParams()
     const dispatch = useAppDispatch();
     const {list} = useAppSelector(state => state.pokemon);
     const {type} = useAppSelector(state => state.typePokemon);
     const {ability} = useAppSelector(state => state.abilitiPokemon);
 
-    const pokemonTypeList: IPokemonResultList[] = type?.pokemon?.map(item => item.pokemon) || [];
-    const pokemonAbilitiList: IPokemonResultList[] = ability?.pokemon?.map(item => item.pokemon) || [];
-    console.log(pokemonAbilitiList)
+    const pokemonTypeList = useMemo(() => type?.pokemon?.map(item => item.pokemon) || [], [type]);
+    const pokemonAbilitiList: IPokemonResultList[] = useMemo(() => ability?.pokemon?.map(item => item.pokemon) || [], [ability]);
+
 
 
     const [pokemonList, setPokemonList] = useState<IPokemonResultList[]>([]);
 
 
     useEffect(() => {
-        let newPokemonList: IPokemonResultList[] = [];
+        let newPokemonList: IPokemonResultList[];
 
         if (location.pathname === '/search' && query.get('type') === 'type') {
             newPokemonList = pokemonTypeList;
@@ -51,7 +51,7 @@ const PokemonsComponent: FC<IProps> = () => {
             setPokemonList(newPokemonList);
         }
 
-    }, [location.pathname, pokemonTypeList, list, pokemonList]);
+    }, [location.pathname, pokemonTypeList, list, pokemonList, pokemonAbilitiList, query]);
 
     useEffect(() => {
         dispatch(pokemonActions.getList({nextU: pokemonsListUrl}));
