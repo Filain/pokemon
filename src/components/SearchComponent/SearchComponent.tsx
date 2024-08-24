@@ -44,9 +44,9 @@ const SearchComponent: FC<IProps> = () => {
 
     return (
         <div className={styles.wrap}>
-            {/*{searchType === 'type' || <PokemonsComponent />}*/}
-            {JSON.stringify(ability)}
-            {JSON.stringify(type)}
+            {<PokemonsComponent />}
+            {/*{JSON.stringify(ability)}*/}
+            {/*{JSON.stringify(type)}*/}
         </div>
     );
 };

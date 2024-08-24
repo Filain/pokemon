@@ -1,4 +1,4 @@
-import {FC, PropsWithChildren, useEffect} from "react";
+import {FC, PropsWithChildren, useEffect, useState} from "react";
 import {PaginationComponent} from "../PaginationComponent/PaginationComponent";
 import {useAppDispatch, useAppSelector} from "../../hook/reduxHooks";
 import {PokemonComponent} from "./PokemonComponent/PokemonComponent";
@@ -7,7 +7,7 @@ import {pokemonsListUrl} from "../../constants/urls";
 
 import styles from './PokemonsComponent.module.css'
 import {IPokemonResultList} from "../../interfaces/pokemonListInterface";
-import {useLocation} from "react-router-dom";
+import {useLocation, useSearchParams} from "react-router-dom";
 import {getFromLocalStorage} from "../../services/localStorageService";
 
 interface IProps extends PropsWithChildren {
@@ -16,39 +16,54 @@ interface IProps extends PropsWithChildren {
 }
 
 const PokemonsComponent: FC<IProps> = () => {
-    const location = useLocation()
+    const location = useLocation();
+    const [query, setQuery] = useSearchParams()
     const dispatch = useAppDispatch();
-    const {list} = useAppSelector(state => state.pokemon)
-    const {type} = useAppSelector(state => state.typePokemon)
+    const {list} = useAppSelector(state => state.pokemon);
+    const {type} = useAppSelector(state => state.typePokemon);
+    const {ability} = useAppSelector(state => state.abilitiPokemon);
+
+    const pokemonTypeList: IPokemonResultList[] = type?.pokemon?.map(item => item.pokemon) || [];
+    const pokemonAbilitiList: IPokemonResultList[] = ability?.pokemon?.map(item => item.pokemon) || [];
+    console.log(pokemonAbilitiList)
 
 
+    const [pokemonList, setPokemonList] = useState<IPokemonResultList[]>([]);
 
-
-    // Логіка для визначення списку покемонів
-    let pokemonList: IPokemonResultList[] | undefined;
-    if (location.pathname === '/search') {
-        pokemonList = type.pokemon.map(item => item.pokemon)
-    }
-
-    if (location.pathname === '/favorite') {
-        pokemonList = getFromLocalStorage(); // Отримуємо список покемонів з localStorage
-    // } else if (location.pathname === '/search') {
-    //     pokemonList = props;
-        // pokemonList = type.pokemon.map(item => item.pokemon);
-
-    }
-
-    else {
-        pokemonList = list?.results; // Використовуємо список з Redux store
-    }
 
     useEffect(() => {
-        dispatch(pokemonActions.getList({nextU: pokemonsListUrl}))
+        let newPokemonList: IPokemonResultList[] = [];
+
+        if (location.pathname === '/search' && query.get('type') === 'type') {
+            newPokemonList = pokemonTypeList;
+        } else if (location.pathname === '/search' && query.get('type') === 'ability') {
+            newPokemonList = pokemonAbilitiList;
+            console.log('ability')
+        } else if (location.pathname === '/favorite') {
+            const favorites = getFromLocalStorage(); // Отримуємо список покемонів з localStorage
+            newPokemonList = favorites || [];
+        } else {
+            newPokemonList = list?.results || []; // Використовуємо список з Redux store
+        }
+
+        // Перевірка на те, чи дійсно треба оновлювати стан
+        if (JSON.stringify(newPokemonList) !== JSON.stringify(pokemonList)) {
+            setPokemonList(newPokemonList);
+        }
+
+    }, [location.pathname, pokemonTypeList, list, pokemonList]);
+
+    useEffect(() => {
+        dispatch(pokemonActions.getList({nextU: pokemonsListUrl}));
     }, [dispatch]);
+
     return (
         <>
             <div className={styles.wrap}>
-                {pokemonList?.map(pokemon => <PokemonComponent key={pokemon.url} pokemon={pokemon}/>)}</div>
+                {pokemonList?.map(pokemon => (
+                    <PokemonComponent key={pokemon.url} pokemon={pokemon}/>
+                ))}
+            </div>
             <PaginationComponent/>
         </>
     );

@@ -13,6 +13,10 @@ const PaginationComponent: FC<IProps> = () => {
     const dispatch = useAppDispatch();
     const location = useLocation();
     const favorite = location.pathname === '/favorite'
+    const search = location.pathname === '/search'
+    let show = favorite || search
+
+
 
 
     const prev = () => {
@@ -30,7 +34,7 @@ const PaginationComponent: FC<IProps> = () => {
 
     return (
         <>
-            {favorite || (
+            {show || (
                 <div>
                     <button disabled={!list?.previous} onClick={prev}>Prev</button>
                     <button disabled={!list?.next} onClick={next}>Next</button>
