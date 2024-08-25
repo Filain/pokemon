@@ -1,10 +1,15 @@
-.wrap{
-    display: flex;
-    flex-wrap: wrap;
+
+
+.wrap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 стовпці, кожен з шириною 1fr */
+    grid-template-rows: repeat(5, 15vh); /* 5 рядків, висота кожного рядка автоматично визначається вмістом */
+    gap: 50px;
+
     justify-content: center;
     align-items: center;
-    gap: 20px;
-    padding: 20px;
-    max-width: 1440px;
+
+
+    max-width: var(--wrap);
 
 }

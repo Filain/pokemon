@@ -1,5 +1,5 @@
 import {FC, PropsWithChildren} from "react";
-import {FavoriteComponent} from "../components/FavoriteComponent/FavoriteComponent";
+import {PokemonsComponent} from "../components/PokemonsComponent/PokemonsComponent";
 
 interface IProps extends PropsWithChildren{
 
@@ -8,7 +8,7 @@ interface IProps extends PropsWithChildren{
 const FavoritePage: FC<IProps> = () => {
  return (
   <>
-   <FavoriteComponent/>
+      <PokemonsComponent />
   </>
  );
 };

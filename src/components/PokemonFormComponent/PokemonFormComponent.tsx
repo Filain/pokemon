@@ -15,8 +15,8 @@ const PokemonFormComponent: FC<IProps> = () => {
              {forma?.sprites.back_default && <img src={forma?.sprites.back_default} alt="back_default"/>}
              {forma?.sprites.front_shiny && <img src={forma?.sprites.front_shiny} alt="front_shiny"/>}
              {forma?.sprites.back_shiny && <img src={forma?.sprites.back_shiny} alt="front_default"/>}
-             <p>{forma?.pokemon.name}</p>
-             <p>{forma?.version_group.name}</p>
+             {/*<p>{forma?.pokemon.name}</p>*/}
+             {/*<p>{forma?.version_group.name}</p>*/}
          </div>
      </div>
  );

@@ -1,11 +1,79 @@
 .header {
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 20px;
     background-color: grey;
+    width: var(--wrap);
 
 }
 
-button {
-    margin-right: 20px;
+.button {
+    font-family: var(--font-style), sans-serif;
+    background-color: var(--button-active-bg-color);
+    color:var(--button-text-color);
+    height: var(--height);
+    padding: 0 15px;
+    font-size: var(--button-font-size);
+    border: 1px solid var(--button-border-color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: var(--border-radius);
+    margin: 0 10px;
+    transform: scale(1); /* Початковий розмір кнопки */
+    box-sizing: border-box;
+}
+
+.button:hover {
+    background-color: var(--button-hover-bg-color);
+    color: var(--button-text-color-hover);
+    transform: scale(1.05); /* Збільшує кнопку на 5% при наведенні */
+}
+
+.active {
+    background-color:  var(--button-active-bg-color);
+    color: var(--button-active-text-color);
+    width: var(--button-text-weight);
+}
+
+.inputText {
+    height: var(--height);
+    border-radius: var(--border-radius);
+    padding: 0 15px;
+    box-sizing: border-box;
+    font-size: var(--button-font-size);
+    margin-left:  40px;
+}
+
+/* Сховати стандартний вигляд radio button */
+.inputButton input[type="radio"] {
+    appearance: none; /* Сховати стандартний вигляд */
+    width: 16px;
+    height: 16px;
+    margin-right: 8px; /* Відступ між радіо кнопкою і текстом */
+    border: 2px solid var(--button-border-color); /* Обводка радіо кнопки */
+    border-radius: 50%; /* Заокруглення */
+    background-color: var(--button-bg-color); /* Колір фону радіо кнопки */
+    cursor: pointer; /* Змінює курсор при наведенні на радіо кнопку */
+    position: relative;
+}
+
+/* Стилі для вибраної радіо кнопки */
+.inputButton input[type="radio"]:checked::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--button-active-bg-color); /* Колір активного стану */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.inputButton span {
+    font-weight: var(--button-text-weight); /* Товщина шрифту */
+    margin-right: 10px;
+    font-family: var(--font-style), sans-serif;
 }

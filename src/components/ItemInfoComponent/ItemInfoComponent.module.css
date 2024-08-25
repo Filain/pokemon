@@ -1,0 +1,71 @@
+.wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+p {
+    text-transform: capitalize;
+}
+
+.button {
+    font-family: var(--font-style), sans-serif;
+    background-color: var(--button-active-bg-color);
+    color: var(--button-text-color);
+    height: var(--height);
+    padding: 0 15px;
+    font-size: var(--button-font-size);
+    border: 1px solid var(--button-border-color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: var(--border-radius);
+    margin: 10px;
+    transform: scale(1); /* Початковий розмір кнопки */
+    box-sizing: border-box;
+    text-transform: capitalize;
+
+}
+
+.button:hover {
+    background-color: var(--button-hover-bg-color);
+    color: var(--button-text-color-hover);
+    transform: scale(1.05); /* Збільшує кнопку на 5% при наведенні */
+}
+
+.active {
+    background-color: var(--button-active-bg-color);
+    color: var(--button-active-text-color);
+    width: var(--button-text-weight);
+}
+
+.itemName {
+    font-family: var(--font-style), sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    text-transform: uppercase;
+}
+
+.itemImg {
+    width: calc(var(--wrap) / 2);
+    cursor: inherit;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.forms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

@@ -21,7 +21,17 @@ export default function addToLocalStorage(id: number, name: string): void {
 
 
 export function removeFromLocalStorage(id: number): void {
+    // Отримуємо список покемонів з localStorage
+    const pokemonList: IPokemonResultList[] = JSON.parse(localStorage.getItem('pokemonList') || '[]');
 
+    // Формуємо URL покемона на основі переданого id
+    const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${id.toString()}`;
+
+    // Фільтруємо масив, видаляючи покемона з відповідним URL
+    const updatedPokemonList = pokemonList.filter(pokemon => pokemon.url !== pokemonUrl);
+
+    // Зберігаємо оновлений масив назад у localStorage
+    localStorage.setItem('pokemonList', JSON.stringify(updatedPokemonList));
 }
 
 export function getFromLocalStorage(): IPokemonResultList[] {

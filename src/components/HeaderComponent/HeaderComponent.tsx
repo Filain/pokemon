@@ -1,8 +1,11 @@
-import {FC, PropsWithChildren} from "react";
+import {FC, PropsWithChildren, useState} from "react";
 
 import style from './HeaderComponent.module.css'
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
+import {pokemonActions} from "../../redux/slice/pokemonSlice";
+import {pokemonsListUrl} from "../../constants/urls";
+import {useAppDispatch} from "../../hook/reduxHooks";
 
 
 interface IProps extends PropsWithChildren {
@@ -16,13 +19,18 @@ interface IFormValues {
 
 const HeaderComponent: FC<IProps> = () => {
     const navigate = useNavigate()
+    const [activeButton, setActiveButton] = useState<string>('');
+    const dispatch = useAppDispatch();
     const [, setQuery] = useSearchParams()
 
     const navigateTo = (page: string) => {
         navigate(page)
+        dispatch(pokemonActions.getList({nextU: pokemonsListUrl}))
+        setActiveButton(page);
     }
 
     const {register, handleSubmit} = useForm<IFormValues>({})
+
     const onSubmit = async (data: IFormValues) => {
         navigate('/search')
         setQuery({word: data.text, type: data.radio})
@@ -31,31 +39,36 @@ const HeaderComponent: FC<IProps> = () => {
     return (
         <div className={style.header}>
 
-            <button onClick={() => navigateTo('/pokemon')}>Pokemon</button>
-            <button onClick={() => navigateTo('/favorite')}>Favorite</button>
+            <button className={`${style.button} ${activeButton === '/pokemon' ? style.active : ''}`}
+                    onClick={() => navigateTo('/pokemon')}>Pokemon
+            </button>
+            <button className={`${style.button} ${activeButton === '/favorite' ? style.active : ''}`}
+                    onClick={() => navigateTo('/favorite')}>Favorite
+            </button>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <input {...register("text")} type="text" placeholder="Search"/>
-                <button type="submit">Search</button>
-                <label title="Search by name">
-                    <input {...register("radio")} type="radio" value="name" defaultChecked/>
-                    Name
+                <input className={style.inputText} {...register("text")} type="text" placeholder="Search"/>
+                <button className={style.button} type="submit">Search</button>
+                <label className={style.inputButton} title="Search by name">
+                    <input  {...register("radio")} type="radio" value="name" defaultChecked/>
+                    <span>Name</span>
                 </label>
-                <label title="For example:
+
+                <label className={style.inputButton} title="For example:
 fighting
 flying
 ground
 ghost">
                     <input {...register("radio")} type="radio" value="type"/>
-                    Type
+                    <span>    Type</span>
                 </label>
-                <label title=" For example:
+                <label className={style.inputButton} title=" For example:
 stench
 drizzle
 sturdy
 damp
 static">
                     <input {...register("radio")} type="radio" value="ability"/>
-                    Ability
+                    <span>   Ability</span>
                 </label>
             </form>
         </div>

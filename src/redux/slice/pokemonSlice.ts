@@ -1,22 +1,27 @@
-import {createAsyncThunk, createSlice, isFulfilled, isPending} from '@reduxjs/toolkit'
+import {createAsyncThunk, createSlice, isFulfilled, isPending, PayloadAction} from '@reduxjs/toolkit'
 import {pokemonService} from "../../services/pokemonService";
 import {AxiosError} from "axios";
 import {IPokemon} from "../../interfaces/pokemonInterface";
 import {IPokemonResponse} from "../../interfaces/pokemonListInterface";
 import {IForm} from "../../interfaces/formInterface";
+import {pokemonsListUrl} from "../../constants/urls";
 
 interface IState {
     list: IPokemonResponse | null,
     items: IPokemon | null,
     isLoading: boolean
     forma: IForm | null
+    startUrl: string
 }
 
 const initialState: IState = {
     list:null,
     items: null,
     isLoading: false,
-    forma: null
+    forma: null,
+    startUrl: pokemonsListUrl
+
+
 }
 
 const getList = createAsyncThunk<IPokemonResponse, {nextU:string} >(
@@ -61,7 +66,11 @@ const getForm = createAsyncThunk<IForm, { url: string }>(
 const pokemonSlice = createSlice({
     name: 'pokemonSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        changeStartUrl: (state, action: PayloadAction<string>) => {
+            state.startUrl = action.payload
+        }
+    },
     extraReducers: builder =>
         builder
             .addCase(getList.fulfilled, (state, action) => {
@@ -87,7 +96,7 @@ const pokemonActions = {
     ...actions,
     getItem,
     getList,
-    getForm
+    getForm,
 }
 
 export {

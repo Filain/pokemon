@@ -1,7 +1,7 @@
 import {FC, PropsWithChildren, useEffect} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useAppDispatch} from "../../hook/reduxHooks";
-import styles from "../PokemonsComponent/PokemonsComponent.module.css";
+
 import {typePokemonActions} from "../../redux/slice/typePokemonSlice";
 import {pokemonsAbylytyUrl, pokemonsTypeUrl} from "../../constants/urls";
 import {abilitiPokemonActions} from "../../redux/slice/abilitiPokemonSlice";
@@ -17,8 +17,7 @@ const SearchComponent: FC<IProps> = () => {
     const navigate = useNavigate();
 
     const dispatch = useAppDispatch();
-    // const { type } = useAppSelector(state => state.typePokemon);
-    // const { ability } = useAppSelector(state => state.abilitiPokemon);
+
 
     const searchWord = query.get('word');
     const searchType = query.get('type');
@@ -42,10 +41,9 @@ const SearchComponent: FC<IProps> = () => {
     }, [searchType, searchWord, dispatch]);
 
     return (
-        <div className={styles.wrap}>
+        <div>
             {<PokemonsComponent />}
-            {/*{JSON.stringify(ability)}*/}
-            {/*{JSON.stringify(type)}*/}
+
         </div>
     );
 };

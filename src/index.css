@@ -2,5 +2,47 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+:root {
+    /*button*/
+
+    --button-bg-color: #f0f0f0;
+    --button-text-color: #000;
+    --button-padding: 10px 20px;
+    --button-font-size: 16px;
+    --button-border-color: #ccc;
+    --button-hover-bg-color: #e0e0e0;
+    --button-active-bg-color: #007bff;
+    --button-active-text-color: white;
+
+    /*button-hover*/
+
+
+    --background-color-hover: #e0e0e0;
+    --button-text-color-hover: #000;
+
+
+
+    /*--button-active: */
+    --background-color-active: #007bff;
+    --color: white;
+    --button-text-weight: bold;
+
+    --color-border: rgba(0, 0, 0, 0.71);
+
+    --wrap: 1400px;
+
+    --height: 30px;
+
+    --font-size: 16px;
+    --border-radius: 5px;
+
+    --font-style: Arial;
+
 }
 

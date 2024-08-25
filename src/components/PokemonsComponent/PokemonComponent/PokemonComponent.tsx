@@ -21,11 +21,12 @@ const PokemonComponent: FC<IProps> = ({pokemon}) => {
 
     return (
 
-        <div className={styles.wrap} onClick={() => pokmonInfo()}>
-            <p>{id} {pokemon.name}</p>
-            <img
-                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
-                alt={pokemon.name}/>
+        <div className={styles.wrap}>
+
+            <img onClick={() => pokmonInfo()}
+                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
+                 alt={pokemon.name}/>
+            <p className={styles.paragraf}>{pokemon.name}</p>
         </div>
     );
 };

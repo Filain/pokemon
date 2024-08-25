@@ -19,7 +19,6 @@ const getType = createAsyncThunk<IType, { url: string }>(
     async ({url}, {rejectWithValue}) => {
         try {
             const {data} = await typePokemonService.getType(url)
-            console.log('typePokemonService')
             return data
         } catch (e) {
             const err = e as AxiosError

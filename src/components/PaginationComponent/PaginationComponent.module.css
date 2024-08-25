@@ -1,3 +1,11 @@
+.wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: var(--wrap);
+    margin-top: 40px;
+}
+
 .pagination {
     display: flex;
     justify-content: center;
@@ -6,4 +14,26 @@
     margin: 0;
     padding: 0;
     gap: 10px;
+}
+
+.button {
+    font-family: var(--font-style), sans-serif;
+    background-color: var(--button-active-bg-color);
+    color:var(--button-text-color);
+    height: var(--height);
+    padding: 0 15px;
+    font-size: var(--button-font-size);
+    border: 1px solid var(--button-border-color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: var(--border-radius);
+    margin: 0 10px;
+    transform: scale(1); /* Початковий розмір кнопки */
+    box-sizing: border-box;
+}
+
+.button:hover {
+    background-color: var(--button-hover-bg-color);
+    color: var(--button-text-color-hover);
+    transform: scale(1.05); /* Збільшує кнопку на 5% при наведенні */
 }
